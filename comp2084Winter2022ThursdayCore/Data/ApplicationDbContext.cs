@@ -13,7 +13,7 @@ namespace comp2084Winter2022ThursdayCore.Data
         //add a DbSet<TableName> TableName {get; set}
         //db.Semesters
 
-        DbSet<Employee> employees { get; set; }
+        public DbSet<Employee> employees { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
