@@ -7,28 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using comp2084Winter2022ThursdayCore.Data;
 using comp2084Winter2022ThursdayCore.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace comp2084Winter2022ThursdayCore.Controllers
 {
-   
-    public class EmployeesController : Controller
+    public class EmployeesNewController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public EmployeesNewController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: EmployeesNew
         public async Task<IActionResult> Index()
         {
-            ViewData["custom"] = "My Custom Value";
             return View(await _context.employees.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: EmployeesNew/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,20 +43,18 @@ namespace comp2084Winter2022ThursdayCore.Controllers
             return View(employee);
         }
 
-
-        [Authorize]
-        // GET: Employees/Create
+        // GET: EmployeesNew/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: EmployeesNew/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeName,EmployeePosition,EmployeeAge")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeAge,EmployeeID,EmployeeName,EmployeePosition")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -70,8 +65,7 @@ namespace comp2084Winter2022ThursdayCore.Controllers
             return View(employee);
         }
 
-        [Authorize]
-        // GET: Employees/Edit/5
+        // GET: EmployeesNew/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,12 +81,12 @@ namespace comp2084Winter2022ThursdayCore.Controllers
             return View(employee);
         }
 
-        // POST: Employees/Edit/5
+        // POST: EmployeesNew/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EmployeeID,EmployeeName,EmployeePosition,EmployeeAge")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("EmployeeAge,EmployeeID,EmployeeName,EmployeePosition")] Employee employee)
         {
             if (id != employee.EmployeeID)
             {
@@ -122,9 +116,7 @@ namespace comp2084Winter2022ThursdayCore.Controllers
             return View(employee);
         }
 
-
-        [Authorize]
-        // GET: Employees/Delete/5
+        // GET: EmployeesNew/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,7 +134,7 @@ namespace comp2084Winter2022ThursdayCore.Controllers
             return View(employee);
         }
 
-        // POST: Employees/Delete/5
+        // POST: EmployeesNew/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

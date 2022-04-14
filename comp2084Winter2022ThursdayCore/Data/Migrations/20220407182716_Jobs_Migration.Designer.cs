@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using comp2084Winter2022ThursdayCore.Data;
 
 namespace comp2084Winter2022ThursdayCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220407182716_Jobs_Migration")]
+    partial class Jobs_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,26 +273,6 @@ namespace comp2084Winter2022ThursdayCore.Data.Migrations
                     b.ToTable("employees");
                 });
 
-            modelBuilder.Entity("comp2084Winter2022ThursdayCore.Models.Folder", b =>
-                {
-                    b.Property<int>("FolderID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FolderLocation")
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("OwnerID")
-                        .HasColumnType("int");
-
-                    b.HasKey("FolderID");
-
-                    b.HasIndex("OwnerID");
-
-                    b.ToTable("Folders");
-                });
-
             modelBuilder.Entity("comp2084Winter2022ThursdayCore.Models.Job", b =>
                 {
                     b.Property<int>("JobID")
@@ -305,21 +287,6 @@ namespace comp2084Winter2022ThursdayCore.Data.Migrations
                     b.HasKey("JobID");
 
                     b.ToTable("Jobs");
-                });
-
-            modelBuilder.Entity("comp2084Winter2022ThursdayCore.Models.Owner", b =>
-                {
-                    b.Property<int>("OwnerID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("OwnerName")
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("OwnerID");
-
-                    b.ToTable("Owners");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -380,25 +347,9 @@ namespace comp2084Winter2022ThursdayCore.Data.Migrations
                         .HasForeignKey("JobID");
                 });
 
-            modelBuilder.Entity("comp2084Winter2022ThursdayCore.Models.Folder", b =>
-                {
-                    b.HasOne("comp2084Winter2022ThursdayCore.Models.Owner", "Owner")
-                        .WithMany("Folders")
-                        .HasForeignKey("OwnerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("comp2084Winter2022ThursdayCore.Models.Job", b =>
                 {
                     b.Navigation("EmployeID");
-                });
-
-            modelBuilder.Entity("comp2084Winter2022ThursdayCore.Models.Owner", b =>
-                {
-                    b.Navigation("Folders");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 ﻿using comp2084Winter2022ThursdayCore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,6 +24,7 @@ namespace comp2084Winter2022ThursdayCore.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();

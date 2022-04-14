@@ -7,28 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using comp2084Winter2022ThursdayCore.Data;
 using comp2084Winter2022ThursdayCore.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace comp2084Winter2022ThursdayCore.Controllers
 {
-   
-    public class EmployeesController : Controller
+    public class JobsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public JobsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: Jobs
         public async Task<IActionResult> Index()
         {
-            ViewData["custom"] = "My Custom Value";
-            return View(await _context.employees.ToListAsync());
+            return View(await _context.Jobs.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: Jobs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,42 +33,39 @@ namespace comp2084Winter2022ThursdayCore.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.employees
-                .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            if (employee == null)
+            var job = await _context.Jobs
+                .FirstOrDefaultAsync(m => m.JobID == id);
+            if (job == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(job);
         }
 
-
-        [Authorize]
-        // GET: Employees/Create
+        // GET: Jobs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: Jobs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeName,EmployeePosition,EmployeeAge")] Employee employee)
+        public async Task<IActionResult> Create([Bind("JobID,JobTitle")] Job job)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                _context.Add(job);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(job);
         }
 
-        [Authorize]
-        // GET: Employees/Edit/5
+        // GET: Jobs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,22 +73,22 @@ namespace comp2084Winter2022ThursdayCore.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.employees.FindAsync(id);
-            if (employee == null)
+            var job = await _context.Jobs.FindAsync(id);
+            if (job == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            return View(job);
         }
 
-        // POST: Employees/Edit/5
+        // POST: Jobs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EmployeeID,EmployeeName,EmployeePosition,EmployeeAge")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("JobID,JobTitle")] Job job)
         {
-            if (id != employee.EmployeeID)
+            if (id != job.JobID)
             {
                 return NotFound();
             }
@@ -103,12 +97,12 @@ namespace comp2084Winter2022ThursdayCore.Controllers
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(job);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.EmployeeID))
+                    if (!JobExists(job.JobID))
                     {
                         return NotFound();
                     }
@@ -119,12 +113,10 @@ namespace comp2084Winter2022ThursdayCore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(job);
         }
 
-
-        [Authorize]
-        // GET: Employees/Delete/5
+        // GET: Jobs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,30 +124,30 @@ namespace comp2084Winter2022ThursdayCore.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.employees
-                .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            if (employee == null)
+            var job = await _context.Jobs
+                .FirstOrDefaultAsync(m => m.JobID == id);
+            if (job == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(job);
         }
 
-        // POST: Employees/Delete/5
+        // POST: Jobs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.employees.FindAsync(id);
-            _context.employees.Remove(employee);
+            var job = await _context.Jobs.FindAsync(id);
+            _context.Jobs.Remove(job);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool JobExists(int id)
         {
-            return _context.employees.Any(e => e.EmployeeID == id);
+            return _context.Jobs.Any(e => e.JobID == id);
         }
     }
 }
